@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="localhost DigitalIX_StagingADONET"
+  DTS:DTSID="{B071283E-F1A8-4F66-BD85-0BBCED24B3E1}"
+  DTS:CreationName="ADO.NET:System.Data.SqlClient.SqlConnection, System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectionString="Data Source=localhost;Initial Catalog=DigitalIX_Staging;Integrated Security=True;Application Name=SSIS-LadInitialProductList-{B071283E-F1A8-4F66-BD85-0BBCED24B3E1}localhost.DigitalIX_Staging;" />
+  </DTS:ObjectData>
+</DTS:ConnectionManager>

@@ -1,0 +1,445 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="3/25/2016 11:10:58 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="HP_PAV_DM-1"
+  DTS:CreatorName="HP_Pav_dm-1\Яна"
+  DTS:DTSID="{295BD5D1-9542-4945-A225-8F517D9622C1}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="12.0.2430.0"
+  DTS:LocaleID="5129"
+  DTS:ObjectName="Package"
+  DTS:PackageType="5"
+  DTS:VersionBuild="7"
+  DTS:VersionGUID="{966FFE65-50DA-484E-AC4B-8AAF7403D266}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Load Initial Categories into DB"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{F81A8028-0318-44DA-BA64-801B2137E797}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load Initial Categories into DB">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Load Initial Categories into DB\Categories From STG to DB"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{4B4A084B-F527-447F-AC8C-4F7BAA7F76BE}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Categories From STG to DB"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{8063B430-2260-41CE-88BA-B8ADA3C021BE}"
+              SQLTask:SqlStatementSource="INSERT INTO prod.category&#xA;(CategoryName)&#xA;SELECT distinct CategoryName&#xA;FROM stg.category_Inserted;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Load Initial Categories into DB\Cleanup Staging"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{97C03FC0-CF11-4559-9624-A6605B12343C}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Cleanup Staging"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{8063B430-2260-41CE-88BA-B8ADA3C021BE}"
+              SQLTask:SqlStatementSource="truncate table stg.category_Inserted" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Load Initial Categories into DB\Load Initial Categories into Staging"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:Description="Data Flow Task"
+          DTS:DTSID="{7FD6215D-916A-407E-9D0F-16B569F14B5B}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Load Initial Categories into Staging"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\Load Initial Categories into DB\Load Initial Categories into Staging\ADO NET Destination"
+                  componentClassID="Microsoft.ManagedComponentHost"
+                  contactInfo="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+                  description="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination."
+                  name="ADO NET Destination"
+                  usesDispositions="true"
+                  version="2">
+                  <properties>
+                    <property
+                      dataType="System.String"
+                      description="The Destination database table name."
+                      expressionType="Notify"
+                      name="TableOrViewName"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">"stg"."category_Inserted"</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specify the number of rows per batch. The default is 0 which uses the same size as SSIS internal buffer. "
+                      expressionType="Notify"
+                      name="BatchSize">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out. A value of 0 indicates infinite time-out. "
+                      expressionType="Notify"
+                      name="CommandTimeout">30</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Specifies whether to use the SqlBulkCopy interface to improve the performance of bulk insert operations. Only certain providers support this interface."
+                      expressionType="Notify"
+                      name="UseBulkInsertWhenPossible">true</property>
+                    <property
+                      dataType="System.String"
+                      name="UserComponentTypeName">Microsoft.ADONETDestination</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Load Initial Categories into DB\Load Initial Categories into Staging\ADO NET Destination.Connections[IDbConnection]"
+                      connectionManagerID="{8063B430-2260-41CE-88BA-B8ADA3C021BE}:external"
+                      connectionManagerRefId="Project.ConnectionManagers[localhost DigitalIXADONET]"
+                      description="Managed connection manager"
+                      name="IDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Load Initial Categories into DB\Load Initial Categories into Staging\ADO NET Destination.Inputs[ADO NET Destination Input]"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="ADO NET Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Load Initial Categories into DB\Load Initial Categories into Staging\ADO NET Destination.Inputs[ADO NET Destination Input].Columns[Category]"
+                          cachedCodepage="1252"
+                          cachedDataType="str"
+                          cachedLength="50"
+                          cachedName="Category"
+                          externalMetadataColumnId="Package\Load Initial Categories into DB\Load Initial Categories into Staging\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[CategoryName]"
+                          lineageId="Package\Load Initial Categories into DB\Load Initial Categories into Staging\Extract Initial Categories.Outputs[Flat File Source Output].Columns[Category]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Load Initial Categories into DB\Load Initial Categories into Staging\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[CategoryName]"
+                          dataType="wstr"
+                          length="10"
+                          name="CategoryName" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Load Initial Categories into DB\Load Initial Categories into Staging\ADO NET Destination.Outputs[ADO NET Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="ADO NET Destination Error Output"
+                      synchronousInputId="Package\Load Initial Categories into DB\Load Initial Categories into Staging\ADO NET Destination.Inputs[ADO NET Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Load Initial Categories into DB\Load Initial Categories into Staging\ADO NET Destination.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Load Initial Categories into DB\Load Initial Categories into Staging\ADO NET Destination.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Load Initial Categories into DB\Load Initial Categories into Staging\ADO NET Destination.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Load Initial Categories into DB\Load Initial Categories into Staging\ADO NET Destination.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Load Initial Categories into DB\Load Initial Categories into Staging\Extract Initial Categories"
+                  componentClassID="Microsoft.FlatFileSource"
+                  contactInfo="Flat File Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+                  description="Flat File Source"
+                  localeId="5129"
+                  name="Extract Initial Categories"
+                  usesDispositions="true"
+                  version="1">
+                  <properties>
+                    <property
+                      dataType="System.Boolean"
+                      description="Specifies whether zero-length columns are treated as null."
+                      name="RetainNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of an output column containing the file name. If no name is specified, no output column containing the file name will be generated."
+                      name="FileNameColumnName"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Load Initial Categories into DB\Load Initial Categories into Staging\Extract Initial Categories.Connections[FlatFileConnection]"
+                      connectionManagerID="{767EE846-3210-458E-AA40-BBC4A746A65A}:external"
+                      connectionManagerRefId="Project.ConnectionManagers[Flat File Connection Manager]"
+                      name="FlatFileConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\Load Initial Categories into DB\Load Initial Categories into Staging\Extract Initial Categories.Outputs[Flat File Source Output]"
+                      name="Flat File Source Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Load Initial Categories into DB\Load Initial Categories into Staging\Extract Initial Categories.Outputs[Flat File Source Output].Columns[Category]"
+                          codePage="1252"
+                          dataType="str"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Load Initial Categories into DB\Load Initial Categories into Staging\Extract Initial Categories.Outputs[Flat File Source Output].ExternalColumns[MainCategory]"
+                          length="50"
+                          lineageId="Package\Load Initial Categories into DB\Load Initial Categories into Staging\Extract Initial Categories.Outputs[Flat File Source Output].Columns[Category]"
+                          name="Category"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the data is in binary format."
+                              name="UseBinaryFormat">false</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Load Initial Categories into DB\Load Initial Categories into Staging\Extract Initial Categories.Outputs[Flat File Source Output].ExternalColumns[ProductName]"
+                          codePage="1252"
+                          dataType="str"
+                          length="50"
+                          name="ProductName" />
+                        <externalMetadataColumn
+                          refId="Package\Load Initial Categories into DB\Load Initial Categories into Staging\Extract Initial Categories.Outputs[Flat File Source Output].ExternalColumns[Category]"
+                          codePage="1252"
+                          dataType="str"
+                          length="50"
+                          name="Category" />
+                        <externalMetadataColumn
+                          refId="Package\Load Initial Categories into DB\Load Initial Categories into Staging\Extract Initial Categories.Outputs[Flat File Source Output].ExternalColumns[MainCategory]"
+                          codePage="1252"
+                          dataType="str"
+                          length="50"
+                          name="MainCategory" />
+                        <externalMetadataColumn
+                          refId="Package\Load Initial Categories into DB\Load Initial Categories into Staging\Extract Initial Categories.Outputs[Flat File Source Output].ExternalColumns[ProductDescription]"
+                          codePage="1252"
+                          dataType="str"
+                          length="50"
+                          name="ProductDescription" />
+                        <externalMetadataColumn
+                          refId="Package\Load Initial Categories into DB\Load Initial Categories into Staging\Extract Initial Categories.Outputs[Flat File Source Output].ExternalColumns[Price]"
+                          codePage="1252"
+                          dataType="str"
+                          length="50"
+                          name="Price" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\Load Initial Categories into DB\Load Initial Categories into Staging\Extract Initial Categories.Outputs[Flat File Source Error Output]"
+                      isErrorOut="true"
+                      name="Flat File Source Error Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Load Initial Categories into DB\Load Initial Categories into Staging\Extract Initial Categories.Outputs[Flat File Source Error Output].Columns[Flat File Source Error Output Column]"
+                          codePage="1252"
+                          dataType="text"
+                          description="Flat File Source Error Output Column"
+                          lineageId="Package\Load Initial Categories into DB\Load Initial Categories into Staging\Extract Initial Categories.Outputs[Flat File Source Error Output].Columns[Flat File Source Error Output Column]"
+                          name="Flat File Source Error Output Column" />
+                        <outputColumn
+                          refId="Package\Load Initial Categories into DB\Load Initial Categories into Staging\Extract Initial Categories.Outputs[Flat File Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Load Initial Categories into DB\Load Initial Categories into Staging\Extract Initial Categories.Outputs[Flat File Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Load Initial Categories into DB\Load Initial Categories into Staging\Extract Initial Categories.Outputs[Flat File Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Load Initial Categories into DB\Load Initial Categories into Staging\Extract Initial Categories.Outputs[Flat File Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\Load Initial Categories into DB\Load Initial Categories into Staging.Paths[Flat File Source Output]"
+                  endId="Package\Load Initial Categories into DB\Load Initial Categories into Staging\ADO NET Destination.Inputs[ADO NET Destination Input]"
+                  name="Flat File Source Output"
+                  startId="Package\Load Initial Categories into DB\Load Initial Categories into Staging\Extract Initial Categories.Outputs[Flat File Source Output]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Load Initial Categories into DB.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{D7E5CA83-0DFA-4909-8BD7-D45FB3DD4EA0}"
+          DTS:From="Package\Load Initial Categories into DB\Load Initial Categories into Staging"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\Load Initial Categories into DB\Categories From STG to DB" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Load Initial Categories into DB.PrecedenceConstraints[Constraint 1]"
+          DTS:CreationName=""
+          DTS:DTSID="{90815B37-63BB-4455-B3A8-9185BA5F9C6A}"
+          DTS:From="Package\Load Initial Categories into DB\Categories From STG to DB"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 1"
+          DTS:To="Package\Load Initial Categories into DB\Cleanup Staging" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql12">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="246,42"
+          Id="Package\Load Initial Categories into DB\Load Initial Categories into Staging"
+          TopLeft="5.5,14" />
+        <NodeLayout
+          Size="210,42"
+          Id="Package\Load Initial Categories into DB\Categories From STG to DB"
+          TopLeft="23,97" />
+        <EdgeLayout
+          Id="Package\Load Initial Categories into DB.PrecedenceConstraints[Constraint]"
+          TopLeft="128.25,56">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,41"
+              Start="0,0"
+              End="0,33.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,33.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="157,42"
+          Id="Package\Load Initial Categories into DB\Cleanup Staging"
+          TopLeft="56,196" />
+        <EdgeLayout
+          Id="Package\Load Initial Categories into DB.PrecedenceConstraints[Constraint 1]"
+          TopLeft="131.25,139">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,57"
+              Start="0,0"
+              End="0,49.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,49.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="272,293"
+          Size="272,336"
+          Id="Package\Load Initial Categories into DB"
+          TopLeft="37,37" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Load Initial Categories into DB\Load Initial Categories into Staging">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="181,42"
+          Id="Package\Load Initial Categories into DB\Load Initial Categories into Staging\ADO NET Destination"
+          TopLeft="124,155" />
+        <NodeLayout
+          Size="196,42"
+          Id="Package\Load Initial Categories into DB\Load Initial Categories into Staging\Extract Initial Categories"
+          TopLeft="123,38" />
+        <EdgeLayout
+          Id="Package\Load Initial Categories into DB\Load Initial Categories into Staging.Paths[Flat File Source Output]"
+          TopLeft="217.75,80">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,75"
+              Start="0,0"
+              End="0,67.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,67.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load Initial Categories into DB\Load Initial Categories into Staging\ADO NET Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

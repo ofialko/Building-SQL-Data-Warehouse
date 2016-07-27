@@ -1,0 +1,484 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="3/25/2016 4:43:09 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="HP_PAV_DM-1"
+  DTS:CreatorName="HP_Pav_dm-1\Яна"
+  DTS:DTSID="{D7B3C756-9EEC-4DF2-A22A-C99509235884}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="12.0.2430.0"
+  DTS:LocaleID="5129"
+  DTS:ObjectName="Step1_ExtractNewProducts"
+  DTS:PackageType="5"
+  DTS:VersionBuild="7"
+  DTS:VersionGUID="{C5686872-E4CD-4FB1-8124-DF79000D997E}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[localhost.DigitalIX1]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{C8ADEF81-CE11-4F73-B190-305DEE236CF9}"
+      DTS:ObjectName="localhost.DigitalIX1">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=DigitalIX;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Extract New Product List into TEMP table"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{165daf70-62fd-445a-b354-6afb05f12410}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Extract New Product List into TEMP table"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Extract New Product List into TEMP table\ADO NET Destination"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination."
+              name="ADO NET Destination"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="The Destination database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">"dbo"."temp"</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the number of rows per batch. The default is 0 which uses the same size as SSIS internal buffer. "
+                  expressionType="Notify"
+                  name="BatchSize">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out. A value of 0 indicates infinite time-out. "
+                  expressionType="Notify"
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether to use the SqlBulkCopy interface to improve the performance of bulk insert operations. Only certain providers support this interface."
+                  expressionType="Notify"
+                  name="UseBulkInsertWhenPossible">true</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.ADONETDestination</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Extract New Product List into TEMP table\ADO NET Destination.Connections[IDbConnection]"
+                  connectionManagerID="{8063B430-2260-41CE-88BA-B8ADA3C021BE}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[localhost DigitalIXADONET]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Extract New Product List into TEMP table\ADO NET Destination.Inputs[ADO NET Destination Input]"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="ADO NET Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Extract New Product List into TEMP table\ADO NET Destination.Inputs[ADO NET Destination Input].Columns[ProductName]"
+                      cachedCodepage="1252"
+                      cachedDataType="text"
+                      cachedName="ProductName"
+                      externalMetadataColumnId="Package\Extract New Product List into TEMP table\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[ProductName]"
+                      lineageId="Package\Extract New Product List into TEMP table\Extract New Products from a file.Outputs[Flat File Source Output].Columns[ProductName]" />
+                    <inputColumn
+                      refId="Package\Extract New Product List into TEMP table\ADO NET Destination.Inputs[ADO NET Destination Input].Columns[SubCategory]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="SubCategory"
+                      externalMetadataColumnId="Package\Extract New Product List into TEMP table\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[SubCategory]"
+                      lineageId="Package\Extract New Product List into TEMP table\Extract New Products from a file.Outputs[Flat File Source Output].Columns[SubCategory]" />
+                    <inputColumn
+                      refId="Package\Extract New Product List into TEMP table\ADO NET Destination.Inputs[ADO NET Destination Input].Columns[Category]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="Category"
+                      externalMetadataColumnId="Package\Extract New Product List into TEMP table\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[Category]"
+                      lineageId="Package\Extract New Product List into TEMP table\Extract New Products from a file.Outputs[Flat File Source Output].Columns[Category]" />
+                    <inputColumn
+                      refId="Package\Extract New Product List into TEMP table\ADO NET Destination.Inputs[ADO NET Destination Input].Columns[ProductDescription]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="400"
+                      cachedName="ProductDescription"
+                      externalMetadataColumnId="Package\Extract New Product List into TEMP table\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[ProductDescription]"
+                      lineageId="Package\Extract New Product List into TEMP table\Extract New Products from a file.Outputs[Flat File Source Output].Columns[ProductDescription]" />
+                    <inputColumn
+                      refId="Package\Extract New Product List into TEMP table\ADO NET Destination.Inputs[ADO NET Destination Input].Columns[Price]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Price"
+                      externalMetadataColumnId="Package\Extract New Product List into TEMP table\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[Price]"
+                      lineageId="Package\Extract New Product List into TEMP table\Extract New Products from a file.Outputs[Flat File Source Output].Columns[Price]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Extract New Product List into TEMP table\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[ProductName]"
+                      dataType="wstr"
+                      length="50"
+                      name="ProductName" />
+                    <externalMetadataColumn
+                      refId="Package\Extract New Product List into TEMP table\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[SubCategory]"
+                      dataType="wstr"
+                      length="50"
+                      name="SubCategory" />
+                    <externalMetadataColumn
+                      refId="Package\Extract New Product List into TEMP table\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[Category]"
+                      dataType="wstr"
+                      length="50"
+                      name="Category" />
+                    <externalMetadataColumn
+                      refId="Package\Extract New Product List into TEMP table\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[ProductDescription]"
+                      dataType="wstr"
+                      length="400"
+                      name="ProductDescription" />
+                    <externalMetadataColumn
+                      refId="Package\Extract New Product List into TEMP table\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[Price]"
+                      dataType="numeric"
+                      name="Price"
+                      precision="19"
+                      scale="255" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Extract New Product List into TEMP table\ADO NET Destination.Outputs[ADO NET Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="ADO NET Destination Error Output"
+                  synchronousInputId="Package\Extract New Product List into TEMP table\ADO NET Destination.Inputs[ADO NET Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Extract New Product List into TEMP table\ADO NET Destination.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Extract New Product List into TEMP table\ADO NET Destination.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Extract New Product List into TEMP table\ADO NET Destination.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Extract New Product List into TEMP table\ADO NET Destination.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Extract New Product List into TEMP table\Extract New Products from a file"
+              componentClassID="Microsoft.FlatFileSource"
+              contactInfo="Flat File Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Flat File Source"
+              localeId="5129"
+              name="Extract New Products from a file"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether zero-length columns are treated as null."
+                  name="RetainNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of an output column containing the file name. If no name is specified, no output column containing the file name will be generated."
+                  name="FileNameColumnName"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Extract New Product List into TEMP table\Extract New Products from a file.Connections[FlatFileConnection]"
+                  connectionManagerID="{80BE96C8-0A18-4AEA-9EC4-7BEC6CEC471F}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Flat File Connection Manager LATEST]"
+                  name="FlatFileConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Extract New Product List into TEMP table\Extract New Products from a file.Outputs[Flat File Source Output]"
+                  name="Flat File Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Extract New Product List into TEMP table\Extract New Products from a file.Outputs[Flat File Source Output].Columns[ProductName]"
+                      codePage="1252"
+                      dataType="text"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Extract New Product List into TEMP table\Extract New Products from a file.Outputs[Flat File Source Output].ExternalColumns[ProductName]"
+                      lineageId="Package\Extract New Product List into TEMP table\Extract New Products from a file.Outputs[Flat File Source Output].Columns[ProductName]"
+                      name="ProductName"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Extract New Product List into TEMP table\Extract New Products from a file.Outputs[Flat File Source Output].Columns[SubCategory]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Extract New Product List into TEMP table\Extract New Products from a file.Outputs[Flat File Source Output].ExternalColumns[Category]"
+                      length="50"
+                      lineageId="Package\Extract New Product List into TEMP table\Extract New Products from a file.Outputs[Flat File Source Output].Columns[SubCategory]"
+                      name="SubCategory"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Extract New Product List into TEMP table\Extract New Products from a file.Outputs[Flat File Source Output].Columns[Category]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Extract New Product List into TEMP table\Extract New Products from a file.Outputs[Flat File Source Output].ExternalColumns[MainCategory]"
+                      length="20"
+                      lineageId="Package\Extract New Product List into TEMP table\Extract New Products from a file.Outputs[Flat File Source Output].Columns[Category]"
+                      name="Category"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Extract New Product List into TEMP table\Extract New Products from a file.Outputs[Flat File Source Output].Columns[ProductDescription]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Extract New Product List into TEMP table\Extract New Products from a file.Outputs[Flat File Source Output].ExternalColumns[ProductDescription]"
+                      length="400"
+                      lineageId="Package\Extract New Product List into TEMP table\Extract New Products from a file.Outputs[Flat File Source Output].Columns[ProductDescription]"
+                      name="ProductDescription"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Extract New Product List into TEMP table\Extract New Products from a file.Outputs[Flat File Source Output].Columns[Price]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Extract New Product List into TEMP table\Extract New Products from a file.Outputs[Flat File Source Output].ExternalColumns[Price]"
+                      length="50"
+                      lineageId="Package\Extract New Product List into TEMP table\Extract New Products from a file.Outputs[Flat File Source Output].Columns[Price]"
+                      name="Price"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Extract New Product List into TEMP table\Extract New Products from a file.Outputs[Flat File Source Output].ExternalColumns[ProductName]"
+                      codePage="1252"
+                      dataType="text"
+                      name="ProductName" />
+                    <externalMetadataColumn
+                      refId="Package\Extract New Product List into TEMP table\Extract New Products from a file.Outputs[Flat File Source Output].ExternalColumns[Category]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Category" />
+                    <externalMetadataColumn
+                      refId="Package\Extract New Product List into TEMP table\Extract New Products from a file.Outputs[Flat File Source Output].ExternalColumns[MainCategory]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="MainCategory" />
+                    <externalMetadataColumn
+                      refId="Package\Extract New Product List into TEMP table\Extract New Products from a file.Outputs[Flat File Source Output].ExternalColumns[ProductDescription]"
+                      codePage="1252"
+                      dataType="str"
+                      length="400"
+                      name="ProductDescription" />
+                    <externalMetadataColumn
+                      refId="Package\Extract New Product List into TEMP table\Extract New Products from a file.Outputs[Flat File Source Output].ExternalColumns[Price]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Price" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Extract New Product List into TEMP table\Extract New Products from a file.Outputs[Flat File Source Error Output]"
+                  isErrorOut="true"
+                  name="Flat File Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Extract New Product List into TEMP table\Extract New Products from a file.Outputs[Flat File Source Error Output].Columns[Flat File Source Error Output Column]"
+                      codePage="1252"
+                      dataType="text"
+                      description="Flat File Source Error Output Column"
+                      lineageId="Package\Extract New Product List into TEMP table\Extract New Products from a file.Outputs[Flat File Source Error Output].Columns[Flat File Source Error Output Column]"
+                      name="Flat File Source Error Output Column" />
+                    <outputColumn
+                      refId="Package\Extract New Product List into TEMP table\Extract New Products from a file.Outputs[Flat File Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Extract New Product List into TEMP table\Extract New Products from a file.Outputs[Flat File Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Extract New Product List into TEMP table\Extract New Products from a file.Outputs[Flat File Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Extract New Product List into TEMP table\Extract New Products from a file.Outputs[Flat File Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Extract New Product List into TEMP table.Paths[Flat File Source Output]"
+              endId="Package\Extract New Product List into TEMP table\ADO NET Destination.Inputs[ADO NET Destination Input]"
+              name="Flat File Source Output"
+              startId="Package\Extract New Product List into TEMP table\Extract New Products from a file.Outputs[Flat File Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql12">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="274,42"
+          Id="Package\Extract New Product List into TEMP table"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Extract New Product List into TEMP table">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="233,42"
+          Id="Package\Extract New Product List into TEMP table\Extract New Products from a file"
+          TopLeft="123,38" />
+        <NodeLayout
+          Size="181,42"
+          Id="Package\Extract New Product List into TEMP table\ADO NET Destination"
+          TopLeft="106,177" />
+        <EdgeLayout
+          Id="Package\Extract New Product List into TEMP table.Paths[Flat File Source Output]"
+          TopLeft="239.5,80">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-43,97"
+              Start="0,0"
+              End="-43,89.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,44.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,44.5"
+                    Point2="0,48.5"
+                    Point3="-4,48.5" />
+                  <mssgle:LineSegment
+                    End="-39,48.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-39,48.5"
+                    Point2="-43,48.5"
+                    Point3="-43,52.5" />
+                  <mssgle:LineSegment
+                    End="-43,89.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Extract New Product List into TEMP table\ADO NET Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
