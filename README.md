@@ -1,7 +1,8 @@
 # Building SQL Data Warehouse
 
 At AMES I learned lots of things about Microsoft SQL server. 
-Modules include "Querying Microsoft SQL Server", "Administering a Microsoft SQL Server Database" and " Implementing data warehouses with Microsoft SQL Server". In my final project I built a data base (see the diagram above) for an online retail store selling CD's, DVD's and Games.
+Modules include "Querying Microsoft SQL Server", "Administering a Microsoft SQL Server Database" and " Implementing data warehouses with Microsoft SQL Server". In my final project I built a data base (see the diagram below) 
+for an online retail store selling CD's, DVD's and Games.
 
 TOOLS
 
